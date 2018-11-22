@@ -22,15 +22,15 @@
 						  'data': data,
 						  success: function(response) {
 						  	alert("Vote successful for article '" + response.title + "'");
+						  	window.location = {% url 'index' %}
 						    
 						  },
 						  error: function(xhr, ajaxOptions, thrownError) {
 						    alert("Error: " + thrownError);
-						    // debugger;
 						  }
 						});
 				    } // end else
-				}); // end btnSearch click
+				}); // end btn click
 
 			});
 		</script>

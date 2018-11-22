@@ -27,10 +27,7 @@ def article_add(request):
     return render(request, 'article_add.html', context=context)
 
 def article_vote(request, article_id=None):
-    data = {}
     if request.method == 'POST':
-        # article_id = request.POST.get('article_id', None)
-        # article_obj = get_object_or_404(Article, pk=article_id)
         if article_id:
             article_obj = Article.objects.get(id=article_id)
             article_obj.vote = article_obj.vote + 1
