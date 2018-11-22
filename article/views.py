@@ -4,6 +4,10 @@ from django.http import JsonResponse
 from article.models import Article
 from article.forms import ArticleForm
 
+
+def redirect_home(request):
+    return redirect(index)
+
 def index(request):
     data = {
         'article_count': Article.objects.count(),
