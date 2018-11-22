@@ -1,0 +1,63 @@
+<html>
+	<head>
+		<title>Articles</title>
+		<script src="//code.jquery.com/jquery-1.11.2.min.js"></script> 
+
+		<script type="text/javascript">
+			$(document).ready(function(){
+
+			    $(".btnAddVote").click(function(){
+				    var article_id = $(this).attr('id').substring(11)
+				    if(article_id == ""){
+					    alert("Invalid article.");
+				    } else {
+				    	var vote_url = "{% url 'article_vote' 99999999 %}";
+				    	vote_url = vote_url.replace('99999999', article_id);
+				    	var data = {
+				    		'csrfmiddlewaretoken': '{{ csrf_token }}',
+				    	}
+				    	$.ajax({
+						  'url': vote_url,
+						  'type': "post", 
+						  'data': data,
+						  success: function(response) {
+						  	alert("Vote successful for article '" + response.title + "'");
+						    
+						  },
+						  error: function(xhr, ajaxOptions, thrownError) {
+						    alert("Error: " + thrownError);
+						    // debugger;
+						  }
+						});
+				    } // end else
+				}); // end btnSearch click
+
+			});
+		</script>
+	</head>
+	<body>
+		Hello ! <br/>
+		There are {{ article_count }} articles found.<br/>
+		<a href="{% url 'article_add' %}" />Add New </a>
+		<table border=1 margin=5 padding=5>
+			<tr>
+				<th>Title</th>
+				<th>Content</th>
+				<th>Created On</th>
+				<th>Vote</th>
+				<th>Action</th>
+			</tr>
+			{% for article in articles %}
+			<tr>
+				<td>{{ article.title }}</td>
+				<td>{{ article.content }}</td>
+				<td>{{ article.created_on }}</td>
+				<td>{{ article.vote }}</td>
+				<td>
+					<input type="submit" value="Add Vote" class="btnAddVote" id="article_id_{{article.id}}"/>
+				</td>
+			</tr>
+			{% endfor%}
+		</table>
+	</body>
+</html>
